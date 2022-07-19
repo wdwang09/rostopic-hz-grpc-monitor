@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service RostopicHzRpc {
+    rpc joinClient (Empty) returns (stream RostopicHzResponse) {}
+    rpc addTopics (Topics) returns (Successes) {}
+    rpc removeTopics (Topics) returns (Empty) {}
+    rpc stopMonitor (Empty) returns (Empty) {}
+}
+
+message Empty {}
+
+message Successes {
+    repeated bool successes = 1;
+}
+
+message Topics {
+    repeated string topics = 1;
+}
+
+message RostopicHzResponse {
+    repeated string topics = 1;
+    repeated float hzs = 2;
+}
