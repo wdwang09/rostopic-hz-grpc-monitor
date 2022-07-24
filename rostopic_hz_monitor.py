@@ -29,7 +29,7 @@ class RostopicHzMonitor:
         topics = list(self.topic_subs.keys())
         for topic in topics:
             self.remove_topic(topic)
-    
+
     def add_topic(self, topic_name: str):
         # http://wiki.ros.org/Names#Valid_Names
         # https://docs.python.org/3/library/re.html
@@ -89,20 +89,22 @@ class RostopicHzMonitor:
         # if not self.is_working:
         #     return
         hz_dict = self.calculate_hz()
-        
+
         msg = String()
         for topic in hz_dict:
             hz = hz_dict[topic]
             msg.data += topic
             msg.data += "|"
-            msg.data += str(hz) if type(hz) != float else "{:.2f}".format(hz_dict[topic])
+            msg.data += (
+                str(hz) if type(hz) != float else "{:.2f}".format(hz_dict[topic])
+            )
             msg.data += "|"
         self.hz_pub.publish(msg)
+
 
 if __name__ == "__main__":
     rospy.init_node("my_hz", anonymous=True)
     monitor = RostopicHzMonitor()
-    # monitor.start()
     monitor.add_topic("/t265/odom/sample")
     monitor.add_topic("/d400/aligned_depth_to_color/image_raw")
     rospy.spin()

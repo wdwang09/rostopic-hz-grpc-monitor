@@ -1,4 +1,3 @@
-import multiprocessing as mp
 import time
 import threading
 from concurrent import futures
@@ -92,5 +91,7 @@ def serve(ip):
 
 
 if __name__ == "__main__":
-    serve(60480)
+    port = 60480
+    serve(port)
+    print(f"Port is {port}")
     rospy.spin()
